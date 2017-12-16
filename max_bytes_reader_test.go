@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/go-chi/chi"
-	"kkn.fi/xmw"
+	"kkn.fi/httpx"
 )
 
 func TestMaxBytesReader(t *testing.T) {
@@ -33,7 +33,7 @@ func TestMaxBytesReader(t *testing.T) {
 		}
 		rr := httptest.NewRecorder()
 		r := chi.NewRouter()
-		r.Use(xmw.MaxBytesReader(int64(tc.maxBytes)))
+		r.Use(httpx.MaxBytesReader(int64(tc.maxBytes)))
 		r.HandleFunc("/upload", func(w http.ResponseWriter, r *http.Request) {
 			body, err := ioutil.ReadAll(r.Body)
 			if err != nil {
