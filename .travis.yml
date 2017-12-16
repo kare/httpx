@@ -1,0 +1,5 @@
+language: go
+go_import_path: kkn.fi/httpx
+script: go test
+go:
+    - 1.9
