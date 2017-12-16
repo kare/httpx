@@ -7,6 +7,7 @@
     go get -u kkn.fi/httpx
 
 ## Examples
+See [godoc](https://godoc.org/kkn.fi/httpx) for examples.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first
