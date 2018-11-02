@@ -8,7 +8,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-chi/chi"
 	"kkn.fi/httpx"
 )
 
@@ -27,14 +26,8 @@ func TestMaxBytesReader(t *testing.T) {
 	}
 	for _, tc := range testData {
 		input := bytes.NewReader(bytes.Repeat([]byte("x"), tc.inputLen))
-		req, err := http.NewRequest(tc.method, "/upload", input)
-		if err != nil {
-			t.Fatal(err)
-		}
-		rr := httptest.NewRecorder()
-		r := chi.NewRouter()
-		r.Use(httpx.MaxBytesReader(int64(tc.maxBytes)))
-		r.HandleFunc("/upload", func(w http.ResponseWriter, r *http.Request) {
+		req := httptest.NewRequest(tc.method, "/upload", input)
+		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			body, err := ioutil.ReadAll(r.Body)
 			if err != nil {
 				if err.Error() != tc.err.Error() {
@@ -46,6 +39,8 @@ func TestMaxBytesReader(t *testing.T) {
 				t.Fatalf("%v: expected to read %d bytes, but got %d", tc.name, tc.maxBytes, bytesRead)
 			}
 		})
-		r.ServeHTTP(rr, req)
+		srv := httpx.MaxBytesReader(int64(tc.maxBytes))(h)
+		rr := httptest.NewRecorder()
+		srv.ServeHTTP(rr, req)
 	}
 }
