@@ -55,6 +55,50 @@ func TestChain(t *testing.T) {
 	}
 }
 
+func ExampleChain() {
+	logHandler := func() Middleware {
+		return func(h http.Handler) http.Handler {
+			return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				fmt.Fprintf(w, "start\n")
+				defer fmt.Fprintf(w, "end\n")
+				h.ServeHTTP(w, r)
+			})
+		}
+	}
+	headerHandler := func() Middleware {
+		return func(h http.Handler) http.Handler {
+			return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				w.Header().Set("X-Powered-By", "kare")
+				h.ServeHTTP(w, r)
+			})
+		}
+	}
+	apiHandler := func() http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			fmt.Fprintf(w, "API response\n")
+		})
+	}
+
+	rr := httptest.NewRecorder()
+	r := httptest.NewRequest(http.MethodGet, "/index.html", nil)
+	srv := Chain(apiHandler(), headerHandler(), logHandler())
+	srv.ServeHTTP(rr, r)
+	res := rr.Result()
+	b, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Printf("chain example error: %v\n", err)
+	}
+	xpb := "X-Powered-By"
+	fmt.Printf("%v: %v\n\n", xpb, res.Header.Get(xpb))
+	fmt.Print(string(b))
+	// Output:
+	// X-Powered-By: kare
+	//
+	// start
+	// API response
+	// end
+}
+
 func logHandlerFunc() MiddlewareFunc {
 	return func(h http.HandlerFunc) http.HandlerFunc {
 		return func(w http.ResponseWriter, r *http.Request) {
