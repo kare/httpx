@@ -1,7 +1,9 @@
-# httpx
+# HTTPx
 
 [![Build Status](https://travis-ci.org/kare/httpx.svg?branch=master)](https://travis-ci.org/kare/httpx)
 [![GoDoc](https://godoc.org/kkn.fi/httpx?status.svg)](https://godoc.org/kkn.fi/httpx)
+
+Extensions for Go's net/http package.
 
 ## Installation
     go get -u kkn.fi/httpx
