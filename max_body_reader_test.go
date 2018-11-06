@@ -11,7 +11,7 @@ import (
 	"kkn.fi/httpx"
 )
 
-func TestMaxBytesReader(t *testing.T) {
+func TestMaxBodyReader(t *testing.T) {
 	testData := []struct {
 		name     string
 		method   string
@@ -39,7 +39,7 @@ func TestMaxBytesReader(t *testing.T) {
 				t.Fatalf("%v: expected to read %d bytes, but got %d", tc.name, tc.maxBytes, bytesRead)
 			}
 		})
-		srv := httpx.MaxBytesReader(int64(tc.maxBytes))(h)
+		srv := httpx.MaxBodyReader(int64(tc.maxBytes))(h)
 		rr := httptest.NewRecorder()
 		srv.ServeHTTP(rr, req)
 	}
