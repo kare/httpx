@@ -1,5 +1,15 @@
 language: go
 go_import_path: kkn.fi/httpx
-script: go test
-go:
-    - 1.9
+go: "1.11.x"
+env:
+    - GO111MODULE=on
+jobs:
+    include:
+        - stage: lint
+          script:
+              - ./ci/validate-gofmt.sh
+              - go get golang.org/x/lint/golint
+              - ./ci/validate-lint.sh
+        - stage: test
+          script: go test kkn.fi/httpx
+          install: skip
