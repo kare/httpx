@@ -55,6 +55,23 @@ func TestChain(t *testing.T) {
 	}
 }
 
+func newRequest(method, path string) (*httptest.ResponseRecorder, *http.Request) {
+	request, _ := http.NewRequest(method, path, nil)
+	recorder := httptest.NewRecorder()
+
+	return recorder, request
+}
+
+func BenchmarkChain(b *testing.B) {
+	srv := Chain(apiHandler(), headerHandler(), logHandler())
+	rr, req := newRequest(http.MethodGet, "/")
+	b.ReportAllocs()
+	b.ResetTimer()
+	for n := 0; n < b.N; n++ {
+		srv.ServeHTTP(rr, req)
+	}
+}
+
 func ExampleChain() {
 	logHandler := func() Middleware {
 		return func(h http.Handler) http.Handler {
