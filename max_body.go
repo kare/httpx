@@ -1,4 +1,4 @@
-package httpx // import "kkn.fi/httpx"
+package httpx
 
 import "net/http"
 
