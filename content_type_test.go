@@ -12,10 +12,7 @@ import (
 func newRequest(t *testing.T, method, path, body string) *http.Request {
 	t.Helper()
 	b := bytes.NewBufferString(body)
-	req, err := http.NewRequest(method, path, b)
-	if err != nil {
-		t.Fatal(err)
-	}
+	req := httptest.NewRequest(method, path, b)
 	return req
 }
 
