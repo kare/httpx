@@ -1,3 +1,2 @@
-// Package httpx provides a middleware wrapper for http.MaxBytesReader and
-// functions to chain middleware.
+// Package httpx provides useful HTTP server middleware.
 package httpx
