@@ -1,3 +1,3 @@
 module kkn.fi/httpx
 
-go 1.14
+go 1.17
