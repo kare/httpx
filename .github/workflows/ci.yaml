@@ -1,5 +1,5 @@
 ---
-name: HTTPX
+name: CI
 
 on:
   push:
