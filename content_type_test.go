@@ -18,36 +18,35 @@ func newRequest(t *testing.T, method, path, body string) *http.Request {
 
 func TestContenType(t *testing.T) {
 	tests := []struct {
-		name        string
-		contentType string
-		Func        func(http.Handler) http.Handler
+		name                string
+		expectedContentType string
+		Handler             func(http.Handler) http.Handler
 	}{
 		{
-			name:        "json",
-			contentType: "application/json;charset=utf-8",
-			Func:        httpx.ContentTypeJSON,
+			name:                "json",
+			expectedContentType: "application/json;charset=utf-8",
+			Handler:             httpx.ContentTypeJSON,
 		},
 		{
-			name:        "text",
-			contentType: "text/plain;charset=utf-8",
-			Func:        httpx.ContentTypeText,
+			name:                "text",
+			expectedContentType: "text/plain;charset=utf-8",
+			Handler:             httpx.ContentTypeText,
 		},
 		{
-			name:        "html",
-			contentType: "text/html;charset=utf-8",
-			Func:        httpx.ContentTypeHTML,
+			name:                "html",
+			expectedContentType: "text/html;charset=utf-8",
+			Handler:             httpx.ContentTypeHTML,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			rr := httptest.NewRecorder()
 			req := newRequest(t, http.MethodGet, "/x", "")
-			expectedContentType := tt.contentType
-			srv := tt.Func(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {}))
+			srv := tt.Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {}))
 			srv.ServeHTTP(rr, req)
 			res := rr.Result()
-			if header := res.Header.Get("Content-Type"); expectedContentType != header {
-				t.Errorf("expected content type %v, got %v", expectedContentType, header)
+			if value := res.Header.Get("Content-Type"); tt.expectedContentType != value {
+				t.Errorf("expected content type %v, got %v", tt.expectedContentType, value)
 			}
 		})
 	}
