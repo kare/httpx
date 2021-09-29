@@ -1,7 +1,7 @@
 # HTTPx
 
 [![Build Status](https://github.com/kare/httpx/workflows/HTTPX/badge.svg?branch=master)](https://github.com/kare/httpx/actions?query=workflow%3AHTTPX)
-[GoDoc](https://pkg.go.dev/kkn.fi/httpx)
+[![Go Reference](https://pkg.go.dev/badge/kkn.fi/httpx.svg)](https://pkg.go.dev/kkn.fi/httpx)
 
 Extensions for Go's net/http package.
 
