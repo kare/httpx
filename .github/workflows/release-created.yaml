@@ -1,0 +1,12 @@
+---
+name: Release created
+on:
+  release:
+    types:
+      - created
+jobs:
+  released:
+    uses: kare/github/.github/workflows/go-release.yaml@0.3.4
+    inputs:
+      go_modules_path: ${{ github.repository }}
+      version: ${{ github.event.release.tag_name }}
