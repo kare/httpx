@@ -24,17 +24,17 @@ func TestContenType(t *testing.T) {
 	}{
 		{
 			name:                "json",
-			expectedContentType: "application/json;charset=utf-8",
+			expectedContentType: "application/json; charset=utf-8",
 			Handler:             httpx.ContentTypeJSON,
 		},
 		{
 			name:                "text",
-			expectedContentType: "text/plain;charset=utf-8",
+			expectedContentType: "text/plain; charset=utf-8",
 			Handler:             httpx.ContentTypeText,
 		},
 		{
 			name:                "html",
-			expectedContentType: "text/html;charset=utf-8",
+			expectedContentType: "text/html; charset=utf-8",
 			Handler:             httpx.ContentTypeHTML,
 		},
 	}

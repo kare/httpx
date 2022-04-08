@@ -4,7 +4,7 @@ const (
 	// Header is HTTP Content-Type header name.
 	Header = "Content-Type"
 	// CharsetUTF8 is Content-Type header's character set portition with a value of UTF-8.
-	CharsetUTF8 = ";charset=utf-8"
+	CharsetUTF8 = "; charset=utf-8"
 )
 
 // Type defines all supported Content-Type header values.
