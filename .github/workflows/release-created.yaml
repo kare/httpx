@@ -7,6 +7,6 @@ on:
 jobs:
   released:
     uses: kare/github/.github/workflows/go-release.yaml@main
-    inputs:
-      go_modules_path: ${{ github.repository }}
+    with:
+      go_module_path: kkn.fi/httpx
       version: ${{ github.event.release.tag_name }}
