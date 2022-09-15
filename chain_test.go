@@ -2,7 +2,7 @@ package httpx
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -45,7 +45,7 @@ func TestChain(t *testing.T) {
 	if powered := res.Header.Get("X-Powered-By"); powered != "kare" {
 		t.Fatalf("expected '%v', but got '%v'", "kare", powered)
 	}
-	b, err := ioutil.ReadAll(res.Body)
+	b, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("error reading response body: %v", err)
 	}
@@ -101,7 +101,7 @@ func ExampleChain() {
 	srv := Chain(apiHandler(), headerHandler(), logHandler())
 	srv.ServeHTTP(rr, r)
 	res := rr.Result()
-	b, err := ioutil.ReadAll(res.Body)
+	b, err := io.ReadAll(res.Body)
 	if err != nil {
 		fmt.Printf("chain example error: %v\n", err)
 	}
@@ -153,7 +153,7 @@ func TestChainFunc(t *testing.T) {
 	if powered := res.Header.Get("X-Powered-By"); powered != "kare" {
 		t.Fatalf("expected '%v', but got '%v'", "kare", powered)
 	}
-	b, err := ioutil.ReadAll(res.Body)
+	b, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("error reading response body: %v", err)
 	}

@@ -3,7 +3,7 @@ package httpx_test
 import (
 	"bytes"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -28,7 +28,7 @@ func TestMaxBody(t *testing.T) {
 		input := bytes.NewReader(bytes.Repeat([]byte("x"), tc.inputLen))
 		req := httptest.NewRequest(tc.method, "/upload", input)
 		h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			body, err := ioutil.ReadAll(r.Body)
+			body, err := io.ReadAll(r.Body)
 			if err != nil {
 				if err.Error() != tc.err.Error() {
 					t.Fatalf("%v: unexpected error: '%v', expecting '%v'", tc.name, err, tc.err)
