@@ -1,5 +1,11 @@
 ---
 name: CI
+defaults:
+  run:
+    shell: bash
+concurrency:
+  group: ci-${{ github.head_ref }}
+  cancel-in-progress: false
 on:
   push:
     branches:
@@ -7,12 +13,6 @@ on:
   pull_request:
     branches:
       - main
-concurrency:
-  group: ci-${{ github.head_ref }}
-  cancel-in-progress: true
-defaults:
-  run:
-    shell: bash
 jobs:
   ci:
     uses: kare/github/.github/workflows/go-pkg-ci.yaml@main
