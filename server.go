@@ -5,7 +5,8 @@ import (
 	"time"
 )
 
-// NewServer creates a pre-configured [http.Server] with reasonable defaults.
+// NewServer creates a pre-configured [http.Server] with reasonable defaults
+// and provides functional options as a mean to override default configuration.
 func NewServer(addr string, handler http.Handler, options ...func(*http.Server)) (*http.Server, error) {
 	s := &http.Server{
 		Addr:              addr,
