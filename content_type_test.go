@@ -1,5 +1,3 @@
-//go:build !integration
-
 package httpx_test
 
 import (
